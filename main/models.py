@@ -1,12 +1,14 @@
 from django.db import models
 
 # Create your models here.
-class MoodEntry(models.Model):
-    mood = models.CharField(max_length=255)
+class ECommerce(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.IntegerField()
     time = models.DateField(auto_now_add=True)
-    feelings = models.TextField()
-    mood_intensity = models.IntegerField()
+    description = models.TextField()
+    quantity = models.IntegerField()
+    sold = models.IntegerField()
 
     @property
-    def is_mood_strong(self):
-        return self.mood_intensity > 5
+    def is_avai(self):
+        return self.quantity > self.sold

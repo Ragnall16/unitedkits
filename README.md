@@ -1,4 +1,4 @@
-1. 
+# 1. 
 a. Membuat sebuah proyek Django baru
 - Membuat folder di lokal (Laptop sendiri)
 - Membuka folder itu pada powershell, membuat virtual environment python, lalu meng-install depedencies yg dibutuhkan
@@ -31,7 +31,7 @@ e. Membuat sebuah fungsi pada views.py untuk dikembalikan ke dalam sebuah templa
 
 f. Membuat sebuah routing pada urls.py aplikasi main untuk memetakan fungsi yang telah dibuat pada views.py.
 - Edit urls.py di folder main dengan
----
+
 from django.urls import path
 from main.views import show_main
 
@@ -40,7 +40,7 @@ app_name = 'main'
 urlpatterns = [
     path('', show_main, name='show_main'),
 ]
----x
+
 - Edit juga urls.py di folder proyek dengan mengimport include dan menambahkan 
 path('', include('main.urls')),
 pada urlpatterns
@@ -51,15 +51,20 @@ g. Melakukan deployment ke PWS terhadap aplikasi yang sudah dibuat sehingga nant
 - ikuti perintah pada web PWS
 
 h. Membuat sebuah README.md yang berisi tautan menuju aplikasi PWS yang sudah di-deploy, serta jawaban dari beberapa pertanyaan berikut.
+
 https://ragnall-muhammad-gopedia.pbp.cs.ui.ac.id/
+
 http://ragnall-muhammad-gopedia.pbp.cs.ui.ac.id/
 
-2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html
+# 2.
 
 ![Bagan No 2](./main/static/images/Bagan%20README%20no%202.jpeg)
 
-3. Dengan git, orang - orang bisa mengerjakan proyek bersama - sama dalam waktu yang sama. Hal ini dapat dilakukan dengan branching dalam git, suatu developer bisa mengerjakan fitur A dan developer lain bisa mengerjakan fitur lainnya. git juga bisa dijadikan backup, karena dengan git sebuah proyek disimpan di "dua" tempat, lokal developer masing - masing dan juga disimpan di github.
+# 3. 
+Dengan git, orang - orang bisa mengerjakan proyek bersama - sama dalam waktu yang sama. Hal ini dapat dilakukan dengan branching dalam git, suatu developer bisa mengerjakan fitur A dan developer lain bisa mengerjakan fitur lainnya. git juga bisa dijadikan backup, karena dengan git sebuah proyek disimpan di "dua" tempat, lokal developer masing - masing dan juga disimpan di github.
 
-4. Karena Django menggunakan MVT yang friendly untuk pemula yang mengajarkan dasar - dasar. MVT memudahkan kode untuk dikelola, kode juga dapat digunakan kembali dalam berbagai bagian aplikasi yang berbeda, dan juga memisahkan tugas antara logika aplikasi, tampilan, dan data. Django juga menggunakan Python yang juga merupakan bahasa pemrograman untuk pemula.
+# 4. 
+Karena Django menggunakan MVT yang friendly untuk pemula yang mengajarkan dasar - dasar. MVT memudahkan kode untuk dikelola, kode juga dapat digunakan kembali dalam berbagai bagian aplikasi yang berbeda, dan juga memisahkan tugas antara logika aplikasi, tampilan, dan data. Django juga menggunakan Python yang juga merupakan bahasa pemrograman untuk pemula.
 
-5. Model pada Django disebut ORM karena Django menggunakan sistem Object Relational Mapping. Object Relational Mapping adalah teknik memanipulasi data dari database menggunakan paradigma object-oriented.
+# 5. 
+Model pada Django disebut ORM karena Django menggunakan sistem Object Relational Mapping. Object Relational Mapping adalah teknik memanipulasi data dari database menggunakan paradigma object-oriented.

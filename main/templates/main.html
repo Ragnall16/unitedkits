@@ -15,8 +15,25 @@
         
         line-height: 1; /* Reduce line spacing for h1 */
     }
+    .top-left {
+        position: absolute;
+        top: 10px; /* Adjust as needed */
+        left: 10px; /* Adjust as needed */
+        text-align: left; /* Align text to the left */
+        font-size: 50px; /* Adjust font size for the top-left text */
+        color: white; /* Ensure it's visible against the background */
+    }
+    .top-left p {
+        font-size: 32px; /* Adjust font size for the top-left text */
+    }
 </style>
-<h1>Gopedia</h1>
+<div class="top-left">
+    <p>{{ nama }}</p>
+    <p>{{ npm }}</p>
+    <p>{{ kelas }}</p>
+</div>
+
+<h1>{{app_name}}</h1>
 <img src="/static/images/Ugarte 24 25 Away Kit.png" alt="Manuel Ugarte wearing United 24/25 Away Kit">
 <h5>Nama Barang: </h5>
 <p>{{ name }}<p>

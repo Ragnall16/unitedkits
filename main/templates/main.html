@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <title>Gopedia</title>
 <style>
     body {
@@ -26,6 +28,17 @@
     .top-left p {
         font-size: 32px; /* Adjust font size for the top-left text */
     }
+    /* .top-right {
+        position: absolute;
+        top: 10px; 
+        right: 10px; 
+        text-align: left; 
+        font-size: 50px; 
+        color: white;
+    }
+    .top-right p {
+        font-size: 16px;
+    } */
 </style>
 <div class="top-left">
     <p>{{ nama }}</p>
@@ -41,7 +54,9 @@
 <p>Rp {{ price }}<p>
 <h5>Deskripsi: </h5>
 <p>{{ description }}<p>
-<h5>Barang Dijual: </h5>
-<p>{{ quantity }}<p>
+<h5>Stock Barang: </h5>
+<p>{{ stock }}<p>
 <h5>Barang Terjual: </h5>
 <p>{{ sold }}<p>
+
+{% endblock content %}

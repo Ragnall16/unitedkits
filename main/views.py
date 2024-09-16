@@ -10,7 +10,7 @@ def show_main(request):
         'name' : '24/25 Away Kit',
         'price': '1000000',
         'description': 'Manchester United Away Kit for the 24/25 Season',
-        'quantity': '10',
+        'stock': '10',
         'sold': '7'
     }
 

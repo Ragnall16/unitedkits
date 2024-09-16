@@ -4,4 +4,4 @@ from main.models import ECommerce
 class ECommerceForm(ModelForm):
     class Meta:
         model = ECommerce
-        fields = ["Name", "Price", "Desc", "Quantity", "Size"]
+        fields = ["name", "season", "type", "description", "quantity", "size"]

@@ -4,7 +4,7 @@
 <style>
     body {
         background-color: #202120; /* Set background color */
-        text-align: center; /* Center all text */
+        text-align: left; /* Center all text */
         color: white; /* Optional: change text color to white for better visibility */
     }
     h1 {
@@ -26,37 +26,74 @@
         color: white; /* Ensure it's visible against the background */
     }
     .top-left p {
-        font-size: 32px; /* Adjust font size for the top-left text */
+        font-size: 28px; /* Adjust font size for the top-left text */
     }
-    /* .top-right {
+    .top-right {
         position: absolute;
         top: 10px; 
         right: 10px; 
-        text-align: left; 
-        font-size: 50px; 
+        text-align: right; 
+        font-size: 18px; 
         color: white;
     }
     .top-right p {
-        font-size: 16px;
-    } */
+        font-size: 28px;
+    }
+    th, td {
+    padding: 10px; /* Add padding to table cells for spacing */
+    border: 1px solid #ddd; /* Add border to table cells */
+    }
 </style>
-<div class="top-left">
+<div class="top-right">
     <p>{{ nama }}</p>
     <p>{{ npm }}</p>
     <p>{{ kelas }}</p>
 </div>
+<body>
+    <h1>{{app_name}}</h1>
+    <img src="/static/images/Ugarte 24 25 Away Kit.png" alt="Manuel Ugarte wearing United 24/25 Away Kit">
+    <h5>Nama Barang: </h5>
+    <p>{{ name }}<p>
+    <h5>Harga: </h5>
+    <p>Rp {{ price }}<p>
+    <h5>Deskripsi: </h5>
+    <p>{{ description }}<p>
 
-<h1>{{app_name}}</h1>
-<img src="/static/images/Ugarte 24 25 Away Kit.png" alt="Manuel Ugarte wearing United 24/25 Away Kit">
-<h5>Nama Barang: </h5>
-<p>{{ name }}<p>
-<h5>Harga: </h5>
-<p>Rp {{ price }}<p>
-<h5>Deskripsi: </h5>
-<p>{{ description }}<p>
-<h5>Stock Barang: </h5>
-<p>{{ stock }}<p>
-<h5>Barang Terjual: </h5>
-<p>{{ sold }}<p>
+    {% if not order_entries %}
+    <p>Belum ada Order-an :(</p>
+    {% else %}
+    <table>
+        <tr>
+            <th>Time</th>
+            <th>Jersey Name</th>
+            <th>Jersey Type</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Size</th>
+        </tr>
+
+        {% comment %} Berikut cara memperlihatkan data order di bawah baris ini 
+        {% endcomment %} 
+        {% for order in order_entries %}
+        <tr>
+            <td>{{order.time}}</td>
+            <td>{{order.name}}</td>
+            <td>{{order.season}} {{order.type}}</td>
+            <td>Rp {{order.price}}</td>
+            <td>{{order.description}}</td>
+            <td>{{order.quantity}}</td>
+            <td>{{order.size}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <br />
+
+    <a href="{% url 'main:create_order' %}">
+        <button>Add Order</button>
+    </a>
+</body>
 
 {% endblock content %}

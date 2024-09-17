@@ -117,10 +117,10 @@ c. Membuat routing URL untuk masing-masing views yang telah ditambahkan pada poi
 ![XML](./main/assets/images/XML.png)
 
 #### JSON
-![JSON](./main/assets/images/XML-ID.png)
+![JSON](./main/assets/images/JSON.png)
 
 #### XML-ID
-![XML-ID](./main/assets/images/JSON.png)
+![XML-ID](./main/assets/images/XML-ID.png)
 
 #### JSON-ID
 ![JSON-ID](./main/assets/images/JSON-ID.png)

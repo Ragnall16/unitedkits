@@ -18,14 +18,15 @@ class mainTest(TestCase):
         response = Client().get('/skibidi/')
         self.assertEqual(response.status_code, 404)
 
-    def test_item_availability(self):
+    def test_customer_money(self):
         now = timezone.now()
-        avai = ECommerce.objects.create(
+        rich = ECommerce.objects.create(
             name = "20/21 Third Kit",
-            price = 1500000,
             time = now,
             description = "Manchester United Third Kit for the 20/21 Season",
             quantity = 10,
-            sold = 10,
+            size = "L",
+            season = "23/24",
+            type = "third",
         )
-        self.assertFalse(avai.is_avai)
+        self.assertFalse(rich.is_customer_rich)

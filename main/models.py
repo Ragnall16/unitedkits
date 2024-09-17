@@ -34,3 +34,7 @@ class ECommerce(models.Model):
     size = models.CharField(max_length=3, choices=SIZE_CHOICES, default= "M")
     season = models.CharField(max_length=5, choices=SEASON_CHOICES, default='24/25')
     type = models.CharField(max_length=5, choices=TYPE_CHOICES, default='home')
+
+    @property
+    def is_customer_rich(self):
+        return self.quantity > 10

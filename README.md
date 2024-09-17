@@ -57,9 +57,9 @@ g. Melakukan deployment ke PWS terhadap aplikasi yang sudah dibuat sehingga nant
 
 h. Membuat sebuah README.md yang berisi tautan menuju aplikasi PWS yang sudah di-deploy, serta jawaban dari beberapa pertanyaan berikut.
 
-https://ragnall-muhammad-gopedia.pbp.cs.ui.ac.id/
+https://ragnall-muhammad-unitedkits.pbp.cs.ui.ac.id/
 
-http://ragnall-muhammad-gopedia.pbp.cs.ui.ac.id/
+http://ragnall-muhammad-unitedkits.pbp.cs.ui.ac.id/
 
 ### 2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
 
@@ -80,16 +80,33 @@ Model pada Django disebut ORM karena Django menggunakan sistem Object Relational
 
 ### 1. Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
 Kita perlu data delivery dalam pengimplementasian sebuah platform karena data delivery yang efisien memastikan website/app berjalan dengan lancar, sehingga memberikan user experience baik.
+
 ### 2. Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
 Menurut saya, tidak bisa dikatakan secara objektif yang lebih baik antara XML dan JSON, mereka memiliki kelebihan dan kekurangan masing - msaing. Alasan JSON lebih populer dibandingkan XML adalah karena beberapa hal:
 <br>1. JSON lebih mudah untuk dibaca/ditulis dibandingkan XML
 <br>2. Sebagian besar language dan framework modern memiliki built-in support untuk JSON
 <br>3. Banyak web API yang lebih memilih JSON karena lebih mudah diintegrasikan dengan aplikasi berbasis JavaScript
+
 ### 3. Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
 is_valid() adalah method yang memeriksa apakah data di form yang dikirimkan oleh user valid sesuai validasi yang ditentukan. Method ini penting karena kita dapat memastikan kebenaran data dan menjaga dari input berbahaya.
+
 ### 4. Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
 Kita menggunakan csrf_token untuk memastikan request asli dan berasal dari orang yang diinginkan. <br>
 Tanpa csrf_token, seseorang bisa mendapatkan akses ke aplikasi yang tidak sah<br>
 Penyerang membuat request yang mengatasnamakan user, tanpa csrf_token, request asli dan request berbahaya tidak dapat bisa dibedakan
 
 ### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+a. Membuat input form untuk menambahkan objek model pada app sebelumnya.
+- membuat file forms.py di folder main dan membuat class dengan parameter ModelForm (import ModelForm dari django), lalu di dalam class itu membuat class Meta yang berisi dua variabel, model yang di assign object dari models.py, dan fields yang berupa list dengan beberapa string yang akan diminta inputnya
+- membuat html untuk tempat input form di folder templates di dalam folder main
+- masih di folder main, menambahkan method pada views.py dan juga menambahkan path yang sesuai di urls.py
+
+b.Tambahkan 4 fungsi views baru untuk melihat objek yang sudah ditambahkan dalam format XML, JSON, XML by ID, dan JSON by ID.
+- membuat 4 method di views.py, dengan sebuah variabel yang mengambil semua instance models.py dari database, untuk yang by ID hanya mengambil sesuai IDnya
+- lalu return menggunakan HTTPResponse dengan tipe yang sesuai (xml/json)
+
+c. Membuat routing URL untuk masing-masing views yang telah ditambahkan pada poin 2.
+- menambahkan path yang sesuai pada urls.py
+  
+
+### 6 Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md.

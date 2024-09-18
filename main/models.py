@@ -11,6 +11,7 @@ def season_choices(start_year=1992, end_year=2025):
     return choices
 
 class ECommerce(models.Model):
+    # List of Tuples for Dropbox choices
     SIZE_CHOICES = [
         ('XS', 'XS'),
         ('S', 'S'),

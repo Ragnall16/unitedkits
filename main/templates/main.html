@@ -51,7 +51,8 @@
 </div>
 <body>
     <h1>{{app_name}}</h1>
-    <img src="static/images/Ugarte 24 25 Away Kit.png" alt="Manuel Ugarte wearing United 24/25 Away Kit">
+    {% load static %}
+    <img src="{% static 'images/Ugarte 24 25 Away Kit.png' %}" alt="Manuel Ugarte wearing United 24/25 Away Kit">
     <h5>Nama Barang: </h5>
     <p>{{ name }}<p>
     <h5>Harga: </h5>
@@ -80,7 +81,7 @@
             <td>{{order.time}}</td>
             <td>{{order.name}}</td>
             <td>{{order.season}} {{order.type}}</td>
-            <td>Rp {{order.price}}</td>
+            <td>Rp {{order.total_price}}</td>
             <td>{{order.description}}</td>
             <td>{{order.quantity}}</td>
             <td>{{order.size}}</td>
@@ -94,6 +95,11 @@
     <a href="{% url 'main:create_order' %}">
         <button>Add Order</button>
     </a>
+
+    <a href="{% url 'main:logout' %}">
+        <button>Logout</button>
+    </a>
+    <h5>Sesi terakhir login: {{ last_login }}</h5>
 </body>
 
 {% endblock content %}

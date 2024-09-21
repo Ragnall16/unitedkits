@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import uuid
 
 # Create your models here.
@@ -26,6 +27,7 @@ class ECommerce(models.Model):
         ('away', 'Away'),
         ('third', 'Third'),
     ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     time = models.DateField(auto_now_add=True)
     name = models.CharField(max_length=255)
@@ -39,3 +41,6 @@ class ECommerce(models.Model):
     @property
     def is_customer_rich(self):
         return self.quantity > 10
+    
+    def total_price(self):
+        return self.price * self.quantity

@@ -1,6 +1,9 @@
 # Table of Contents
 [Tugas 2](#Tugas-2) <br>
-[Tugas 3](#Tugas-3)
+[Tugas 3](#Tugas-3) <br>
+[Tugas 4](#Tugas-4) <br>
+
+---
 
 ## Tugas 2
 ### 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
@@ -124,3 +127,46 @@ c. Membuat routing URL untuk masing-masing views yang telah ditambahkan pada poi
 
 #### JSON-ID
 ![JSON-ID](./main/assets/images/JSON-ID.png)
+
+---
+
+## Tugas 4
+### 1. Apa perbedaan antara HttpResponseRedirect() dan redirect()
+Keduanya berfungsi untuk mengarahkan user ke URL yang berbeda. Perbedaanya, HttpResponseRedirect() memerlukan URL lengkap sebagai input. Sedangkan redirect() dapat menerima URL, nama view, atau objek model, lalu "redirect" ke URL yang benar/sesuai.
+
+### 2. Jelaskan cara kerja penghubungan model Product dengan User!
+Pada file models.py di folder main, pada model Product (ECommerce utk unitedkits) dibuah sebuah atribut/variabel bernama user yang berisi models.ForeignKey(User, on_delete=models.CASCADE), dengan foreign key ini, semua Product akan terhubung dengan satu User. Product yang dibuat akan menyimpan referensi ke user dalam bentuk foreign key, sehingga satu model product hanya dimiliki satu orang User, sedangkan satu User bisa memiliki lebih dari satu model product.
+
+### 3. Apa perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut.
+Authentication adalah proses verifikasi user, sedangkan authorization adalah proses setelah Authentication yang memeriksa/menentukan izin/permission si User. Saat login, yang terjadi adalah authentication, setelah login berhasil baru dilakukan authorization. <br>
+Django mengimplementasi Authentication pada django.contrib.auth, sedangkan implementasi Authorization dalam bentuk sistem Permissions dan Groups.
+
+### 4. Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?
+Django mengingat user yang telah login dengan cookies. Cookies bisa digunakan untuk mengingat preferensi/setting User, memberikan personalized ads (analisis user), memberitahu chapter terakhir yang dibaca (website novel/komik), dll. Namun, tidak semua cookies aman untuk digunakan. Cookies yang menyimpan password/data pribadi bisa menjadi target penyerang, maka cookies harus dipastikan keamanannya.
+
+### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+a. Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar.
+- Meng import method yang diperlukan dari django.contrib.auth serta django.http
+- Menambahkan @login_required(login_url='/login') di atas method show_main di views.py
+- Membuat method register, login, dan logout pada views.py
+- Menambahkan path yang sesuai pada urls.py
+
+b. Membuat dua akun pengguna dengan masing-masing tiga dummy data menggunakan model yang telah dibuat pada aplikasi sebelumnya untuk setiap akun di lokal.
+- Jalankan python manage.py runserver pada terminal
+- Buka http://localhost:8000/ pada browser favorit
+- Pencet "Register Now" lalu buatlah sebuah user, lakukan hal ini dua kali
+- Login ke user 1, buat 3 order, logout lalu lakukan yang sama untuk user 2 
+
+c. Menghubungkan model Product dengan User
+- Pada class ECommerce (nama class menyesuaikan) di models.py, buat lah variabel/atribut user yang berisi models.ForeignKey(User, on_delete=models.CASCADE)
+- Pada views.py, edit method show_main dan create_order
+- Pada show_main, ubah NamaModel.objects.all(), menjadi NamaModel.objects.filter(user=request.user)
+- Pada create_order, ubah form.save() menjadi 3 line yang berisi
+        <br>1. order_entry = form.save(commit=False)
+        <br>2. order_entry.user = request.user
+        <br>3. order_entry.save()
+
+d. Menampilkan detail informasi pengguna yang sedang logged in seperti username dan menerapkan cookies seperti last login pada halaman utama aplikasi.
+- Edit show_main pada views.py dan ganti value dari key name dengan request.user.username serta tambahkan key dan value baru berupa 'last_login': request.COOKIES['last_login']
+
+---

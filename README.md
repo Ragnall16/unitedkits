@@ -66,7 +66,7 @@ http://ragnall-muhammad-unitedkits.pbp.cs.ui.ac.id/
 
 ### 2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
 
-![Bagan No 2](./main/assets/images/Bagan%20README%20no%202.jpeg)
+![Bagan No 2](./static/images/Bagan%20README%20no%202.jpeg)
 
 ### 3. Jelaskan fungsi git dalam pengembangan perangkat lunak!
 Dengan git, orang - orang bisa mengerjakan proyek bersama - sama dalam waktu yang sama. Hal ini dapat dilakukan dengan branching dalam git, suatu developer bisa mengerjakan fitur A dan developer lain bisa mengerjakan fitur lainnya. git juga bisa dijadikan backup, karena dengan git sebuah proyek disimpan di "dua" tempat, lokal developer masing - masing dan juga disimpan di github.
@@ -117,16 +117,16 @@ c. Membuat routing URL untuk masing-masing views yang telah ditambahkan pada poi
 <br>
 
 #### XML
-![XML](./main/assets/images/XML.png)
+![XML](./static/images/XML.png)
 
 #### JSON
-![JSON](./main/assets/images/JSON.png)
+![JSON](./static/images/JSON.png)
 
 #### XML-ID
-![XML-ID](./main/assets/images/XML-ID.png)
+![XML-ID](./static/images/XML-ID.png)
 
 #### JSON-ID
-![JSON-ID](./main/assets/images/JSON-ID.png)
+![JSON-ID](./static/images/JSON-ID.png)
 
 ---
 

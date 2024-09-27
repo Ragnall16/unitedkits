@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 def show_main(request):
     order_entries = ECommerce.objects.filter(user=request.user)
     context = {
-        'app_name' : 'Gopedia',
+        'app_name' : 'UnitedKits',
         'nama' : request.user.username,
         'npm' : '2306210550',
         'kelas' : 'PBP C',
@@ -38,6 +38,29 @@ def create_order(request):
 
     context = {'form': form}
     return render(request, "create_order.html", context)
+
+def edit_order(request, id):
+    # Get order berdasarkan id
+    order = ECommerce.objects.get(pk = id)
+
+    # Set order sebagai instance dari form
+    form = ECommerceForm(request.POST or None, instance=order)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_order.html", context)
+
+def delete_order(request, id):
+    # Get order berdasarkan id
+    order = ECommerce.objects.get(pk = id)
+    # Hapus order
+    order.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))
 
 def show_xml(request):
     data = ECommerce.objects.all()

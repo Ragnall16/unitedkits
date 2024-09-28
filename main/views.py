@@ -1,18 +1,21 @@
 import datetime
+import os
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core import serializers
 from django.shortcuts import render, redirect
-from main.forms import ECommerceForm
+from main.forms import ECommerceForm, JerseyForm
 from main.models import ECommerce
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 # Create your views here.
 @login_required(login_url='/login')
 def show_main(request):
+    last_login = request.COOKIES.get('last_login', 'Not available')
     order_entries = ECommerce.objects.filter(user=request.user)
     context = {
         'app_name' : 'UnitedKits',
@@ -23,10 +26,45 @@ def show_main(request):
         'price': '1500000',
         'description': 'Manchester United Away Kit for the 24/25 Season',
         'order_entries': order_entries,
-        'last_login': request.COOKIES['last_login'],
+        'last_login': last_login,
     }
 
     return render(request, "main.html", context)
+
+def your_order(request):
+    order_entries = ECommerce.objects.filter(user=request.user)
+    context = {
+        'nama' : request.user.username,
+        'npm' : '2306210550',
+        'kelas' : 'PBP C',
+        'order_entries': order_entries,
+    }
+    return render(request, 'your_order.html', context)
+
+def products(request):
+    form = JerseyForm()
+    image_filename = None
+
+    if request.method == 'POST':
+        form = JerseyForm(request.POST)
+        if form.is_valid():
+            season = form.cleaned_data['season']
+            jersey_type = form.cleaned_data['type']
+            image_filename = f"{season} {jersey_type}.png".replace("/", " ")
+
+    context = {
+        'form': form,
+        'image_filename': image_filename
+    }
+    return render(request, 'products.html', context)
+
+def images(request):
+    image_dir = os.path.join(settings.STATIC_ROOT, 'image/players/')
+
+    images = [f for f in os.listdir(image_dir) if f.endswith(('jpg', 'jpeg', 'png', 'gif'))]
+
+    context = {'images': images}
+    return render(request, 'images.html', context)
 
 def create_order(request):
     form = ECommerceForm(request.POST or None)
@@ -34,7 +72,7 @@ def create_order(request):
         order_entry = form.save(commit=False)
         order_entry.user = request.user
         order_entry.save()
-        return redirect('main:show_main')
+        return redirect('main:your_order')
 
     context = {'form': form}
     return render(request, "create_order.html", context)
@@ -49,7 +87,7 @@ def edit_order(request, id):
     if form.is_valid() and request.method == "POST":
         # Simpan form dan kembali ke halaman awal
         form.save()
-        return HttpResponseRedirect(reverse('main:show_main'))
+        return HttpResponseRedirect(reverse('main:your_order'))
 
     context = {'form': form}
     return render(request, "edit_order.html", context)
@@ -60,7 +98,7 @@ def delete_order(request, id):
     # Hapus order
     order.delete()
     # Kembali ke halaman awal
-    return HttpResponseRedirect(reverse('main:show_main'))
+    return HttpResponseRedirect(reverse('main:your_order'))
 
 def show_xml(request):
     data = ECommerce.objects.all()
@@ -84,9 +122,10 @@ def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            login(request, user)
             messages.success(request, 'Your account has been successfully created!')
-            return redirect('main:login')
+            return redirect('main:show_main')
     context = {'form':form}
     return render(request, 'register.html', context)
 

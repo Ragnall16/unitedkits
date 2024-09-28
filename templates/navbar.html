@@ -2,12 +2,18 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
-          <h1 class="text-2xl font-bold text-center text-white">UnitedKits</h1>
+          <h1 class="text-2xl font-serif font-extrabold text-center text-white">UnitedKits</h1>
+          <div class="ml-10 space-x-4 hidden md:flex">
+            <a href="{% url 'main:show_main' %}" class="text-center text-white font-serif py-2 px-4 rounded hover:bg-gray-700 transition duration-300">Home</a>
+            <a href="{% url 'main:your_order' %}" class="text-center text-white font-serif py-2 px-4 rounded hover:bg-gray-700 transition duration-300">Your Order</a>
+            <a href="{% url 'main:products' %}" class="text-center text-white font-serif py-2 px-4 rounded hover:bg-gray-700 transition duration-300">Products</a>
+            <a href="{% url 'main:images' %}" class="text-center text-white font-serif py-2 px-4 rounded hover:bg-gray-700 transition duration-300">Images</a>
+          </div>
         </div>
         <div class="hidden md:flex items-center">
           {% if user.is_authenticated %}
-            <span class="text-gray-300 mr-4">Welcome, {{ user.username }}</span>
-            <a href="{% url 'main:logout' %}" class="text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+            <span class="text-gray-300 mr-4 font-serif">Welcome, {{ user.username }}</span>
+            <a href="{% url 'main:logout' %}" class="text-center bg-red-500 hover:bg-red-600 text-white font-serif font-bold py-2 px-4 rounded transition duration-300">
               Logout
             </a>
           {% else %}
@@ -22,7 +28,8 @@
         <div class="md:hidden flex items-center">
           <button class="mobile-menu-button">
             <svg class="w-6 h-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M4 6h16M4 12h16M4 18h16"></path>
+              <path class="hamburger-icon" d="M4 6h16M4 12h16M4 18h16"></path>
+              <path class="close-icon hidden" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </button>
         </div>
@@ -31,6 +38,10 @@
     <!-- Mobile menu -->
     <div class="mobile-menu hidden md:hidden  px-4 w-full md:max-w-full">
       <div class="pt-2 pb-3 space-y-1 mx-auto">
+        <a href="{% url 'main:show_main' %}" class="block text-center text-white font-serif py-2 px-4 rounded hover:bg-gray-700 transition duration-300">Home</a>
+        <a href="{% url 'main:your_order' %}" class="block text-center text-white font-serif py-2 px-4 rounded hover:bg-gray-700 transition duration-300">Your Order</a>
+        <a href="{% url 'main:products' %}" class="block text-center text-white font-serif py-2 px-4 rounded hover:bg-gray-700 transition duration-300">Products</a>
+        <a href="{% url 'main:images' %}" class="block text-center text-white font-serif py-2 px-4 rounded hover:bg-gray-700 transition duration-300">Images</a>
         {% if user.is_authenticated %}
           <span class="block text-gray-300 px-3 py-2">Welcome, {{ user.username }}</span>
           <a href="{% url 'main:logout' %}" class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
@@ -50,9 +61,13 @@
     <script>
       const btn = document.querySelector("button.mobile-menu-button");
       const menu = document.querySelector(".mobile-menu");
+      const hamburgerIcon = document.querySelector(".hamburger-icon");
+      const closeIcon = document.querySelector(".close-icon");
     
       btn.addEventListener("click", () => {
         menu.classList.toggle("hidden");
+        hamburgerIcon.classList.toggle("hidden");
+        closeIcon.classList.toggle("hidden");
       });
     </script>
   </nav>

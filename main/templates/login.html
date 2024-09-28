@@ -5,10 +5,10 @@
 {% endblock meta %}
 
 {% block content %}
-<div class="min-h-screen flex items-center justify-center w-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen flex items-center justify-center w-screen bg-gray-700 py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md w-full space-y-8">
     <div>
-      <h2 class="mt-6 text-center text-black text-3xl font-extrabold text-gray-900">
+      <h2 class="mt-6 text-center text-white text-3xl font-Monaco font-extrabold text-white">
         Login to your account
       </h2>
     </div>
@@ -27,7 +27,7 @@
       </div>
 
       <div>
-        <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-serif font-bold rounded-md text-white bg-sky-500 hover:bg-lime-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
           Sign in
         </button>
       </div>
@@ -54,9 +54,9 @@
     {% endif %}
 
     <div class="text-center mt-4">
-      <p class="text-sm text-black">
+      <p class="text-sm text-white font-serif">
         Don't have an account yet?
-        <a href="{% url 'main:register' %}" class="font-medium text-indigo-200 hover:text-indigo-300">
+        <a href="{% url 'main:register' %}" class="font-serif text-blue-500 hover:text-green-500">
           Register Now
         </a>
       </p>

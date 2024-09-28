@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>UnitedKits</title>
+{% endblock meta %}
+{% block content %}
+{% include 'navbar.html' %}
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-11/12 my-28 mx-auto">
+    {% for image in images %}
+        <div class="mb-4">
+            <img src="{% static 'image/players/' %}{{ image }}" alt="{{ image }}" class="w-full h-auto rounded-lg"/>
+            <p class="mt-2 text-center text-white font-serif">{{ image|cut:".jpg"|cut:".jpeg"|cut:".png" }}</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}

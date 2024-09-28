@@ -126,6 +126,7 @@ if DEBUG:
     STATICFILES_DIRS = [
         BASE_DIR / 'static' # merujuk ke /static root project pada mode development
     ]
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
 else:
     STATIC_ROOT = BASE_DIR / 'static' # merujuk ke /static root project pada mode production
 

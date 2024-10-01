@@ -2,6 +2,7 @@
 [Tugas 2](#Tugas-2) <br>
 [Tugas 3](#Tugas-3) <br>
 [Tugas 4](#Tugas-4) <br>
+[Tugas 5](#Tugas-5) <br>
 
 ---
 
@@ -170,3 +171,66 @@ d. Menampilkan detail informasi pengguna yang sedang logged in seperti username 
 - Edit show_main pada views.py dan ganti value dari key name dengan request.user.username serta tambahkan key dan value baru berupa 'last_login': request.COOKIES['last_login']
 
 ---
+
+## Tugas 5
+### 1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+CSS Specificity:
+1. Inline styles - Contoh: `<h1 style="color: pink;">`
+2. IDs - Contoh: `#navbar`
+3. Classes, pseudo-classes, attribute selectors - Contoh: `.test, :hover, [href]`
+4. Elements and pseudo-elements - Contoh: `h1, ::before`
+
+Pengecualian aturan ini adalah penggunaan `!important`, yang akan menjadi prioritas tertinggi
+
+Jika dua selector memiliki tingkat prioritas yang sama, yang ditulis terakhir akan diambil.
+
+### 2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
+
+Responsive design penting dalam pengembangan aplikasi web karena dengan responsive design, aplikasi web dapat terlihat baik dalam berbagai perangkat dengan ukuran layar berbeda (mobile, laptop, etc.)
+
+Contoh yang sudah menerapkan:
+- Youtube.com
+
+Contoh yang belum menerapkan:
+- SIAK-NG
+
+### 3. Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+- Margin: Area di luar border yang memisahkan elemen dari elemen lainnya dan mengontrol jarak antar elemen.
+
+- Border: Garis di sekitar padding dan konten elemen. Border memberikan batas visual pada elemen.
+
+- Padding: Ruang antara konten elemen dan border. Padding menambahkan jarak di dalam elemen antara konten dan batas border.
+
+```css
+div {
+  margin: 10px;
+  border: 3px solid red;
+  padding: 5px;
+}
+```
+
+### 4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+- Flexbox: Flexbox digunakan untuk membuat layout yang fleksibel. Elemen-elemen di dalam container dapat secara otomatis menyesuaikan ukuran berdasarkan ruang yang tersedia.
+
+- Grid Layout: Grid layout digunakan untuk membuat layout dua dimensi (baris dan kolom). Dengan Grid, kita bisa menentukan berapa banyak kolom dan baris yang ada dalam layout dan bagaimana elemen ditempatkan di dalam grid tersebut.
+
+
+### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+
+a. Implementasikan fungsi untuk menghapus dan mengedit product.
+- Menambahkan method edit dan delete pada views.py, menambahkan path yang sesuai pada urls.py, lalu untuk edit membuat edit_order.html pada main/templates.
+
+b. Kustomisasi halaman login, register, dan tambah product semenarik mungkin.
+- Menggunakan tailwind untuk men-dekorasi login, register, dan create_order 
+
+c. Jika pada aplikasi belum ada product yang tersimpan, halaman daftar product akan menampilkan gambar dan pesan bahwa belum ada product yang terdaftar.
+- Mengecek apakah `ECommerce.objects.filter(user=request.user)` ada isinya atau tidak, jika tidak, menampilkan gambar yang terdapat pada folder static yang sesuai
+
+d. Jika sudah ada product yang tersimpan, halaman daftar product akan menampilkan detail setiap product dengan menggunakan card (tidak boleh sama persis dengan desain pada Tutorial!).
+- Mengecek apakah `ECommerce.objects.filter(user=request.user)` ada isinya atau tidak, jika ada, menampilkan semua produk dengan card_order.html yang sudah dibuat
+
+e. Untuk setiap card product, buatlah dua buah button untuk mengedit dan menghapus product pada card tersebut!
+- Menambahkan button dengan implementasi edit dan delete order lalu menambahkan tombol dengan SVG yang didapat dari https://tabler.io/icons
+
+f. Buatlah navigation bar (navbar) untuk fitur-fitur pada aplikasi yang responsive terhadap perbedaan ukuran device, khususnya mobile dan desktop.
+- Membuat navbar.html, dan juga menambahkan `<div class="mobile-menu hidden...` untuk tampilan navbar pada mobile

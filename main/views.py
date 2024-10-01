@@ -16,27 +16,20 @@ from django.conf import settings
 @login_required(login_url='/login')
 def show_main(request):
     last_login = request.COOKIES.get('last_login', 'Not available')
-    order_entries = ECommerce.objects.filter(user=request.user)
     context = {
         'app_name' : 'UnitedKits',
         'nama' : request.user.username,
         'npm' : '2306210550',
         'kelas' : 'PBP C',
-        'name' : '24/25 Away Kit',
-        'price': '1500000',
-        'description': 'Manchester United Away Kit for the 24/25 Season',
-        'order_entries': order_entries,
         'last_login': last_login,
     }
 
     return render(request, "main.html", context)
 
+@login_required(login_url='/login')
 def your_order(request):
     order_entries = ECommerce.objects.filter(user=request.user)
     context = {
-        'nama' : request.user.username,
-        'npm' : '2306210550',
-        'kelas' : 'PBP C',
         'order_entries': order_entries,
     }
     return render(request, 'your_order.html', context)
@@ -66,6 +59,7 @@ def images(request):
     context = {'images': images}
     return render(request, 'images.html', context)
 
+@login_required(login_url='/login')
 def create_order(request):
     form = ECommerceForm(request.POST or None)
     if form.is_valid() and request.method == "POST":
@@ -77,6 +71,7 @@ def create_order(request):
     context = {'form': form}
     return render(request, "create_order.html", context)
 
+@login_required(login_url='/login')
 def edit_order(request, id):
     # Get order berdasarkan id
     order = ECommerce.objects.get(pk = id)
@@ -92,6 +87,7 @@ def edit_order(request, id):
     context = {'form': form}
     return render(request, "edit_order.html", context)
 
+@login_required(login_url='/login')
 def delete_order(request, id):
     # Get order berdasarkan id
     order = ECommerce.objects.get(pk = id)

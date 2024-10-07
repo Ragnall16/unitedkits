@@ -3,6 +3,7 @@ from main.views import show_main, create_order, show_xml, show_json, show_xml_by
 from main.views import register, login_user, logout_user
 from main.views import edit_order, delete_order
 from main.views import your_order, products, images
+from main.views import add_order_ajax, get_form_fields
 
 app_name = 'main'
 
@@ -21,4 +22,6 @@ urlpatterns = [
     path('your-order/', your_order, name='your_order'),
     path('products/', products, name='products'),
     path('images/', images, name='images'),
+    path('create-order-ajax', add_order_ajax, name='add_order_ajax'),
+    path('get-form-fields/', get_form_fields, name='get_form_fields'),
 ]

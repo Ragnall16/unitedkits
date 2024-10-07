@@ -1,0 +1,18 @@
+<div id="season">
+    {{ form.season }}
+    {% for error in form.season.errors %}
+        <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+    {% endfor %}
+</div>
+<div id="type">
+    {{ form.type }}
+    {% for error in form.type.errors %}
+        <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+    {% endfor %}
+</div>
+<div id="size">
+    {{ form.size }}
+    {% for error in form.size.errors %}
+        <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+    {% endfor %}
+</div>

@@ -3,26 +3,263 @@
 
 {% block meta %}
 <title>UnitedKits</title>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
 {% endblock meta %}
 {% block content %}
 {% include 'navbar.html' %}
+div 
+  <div id="order_cards"></div>
+  <div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
+    <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
+      <!-- Modal header -->
+      <div class="flex items-center justify-between p-4 border-b rounded-t">
+        <h3 class="text-xl font-semibold text-gray-900">
+          Add New Order
+        </h3>
+        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" id="closeModalBtn">
+          <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="px-6 py-4 space-y-6 form-style">
+        <form id="orderForm">
+          <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+            <input type="text" id="name" name="name" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700" placeholder="Enter your name for the jersey" required>
+          </div>
+          <div class="mb-4" id="season-container">
+            <label for="season" class="block text-sm font-medium text-gray-700">Season</label>
+            <div class="mt-1">
+                <!-- Placeholder for Season Dropdown -->
+            </div>
+            <p class="mt-1 text-sm text-red-600" id="season-error"></p>
+          </div>
+          <div class="mb-4" id="type-container">
+            <label for="type" class="block text-sm font-medium text-gray-700">Type</label>
+            <div class="mt-1">
+                <!-- Placeholder for Type Dropdown -->
+            </div>
+            <p class="mt-1 text-sm text-red-600" id="type-error"></p>
+          </div>
+          <div class="mb-4">
+            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+            <textarea id="description" name="description" rows="3" class="mt-1 block w-full h-52 resize-none border border-gray-300 rounded-md p-2 hover:border-indigo-700" placeholder="Deskripsi Tambahan" required></textarea>
+          </div>
+          <div class="mb-4">
+            <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+            <input type="number" id="quantity" name="quantity" min="1" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700" required>
+          </div>
+          <div class="mb-4" id="size-container">
+            <label for="size" class="block text-sm font-medium text-gray-700">Size</label>
+            <div class="mt-1">
+                <!-- Placeholder for Size Dropdown -->
+            </div>
+            <p class="mt-1 text-sm text-red-600" id="size-error"></p>
+          </div>
+        </form>
+      </div>
+      <!-- Modal footer -->
+      <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end">
+        <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg" id="cancelButton">Cancel</button>
+        <button type="submit" id="submitOrder" form="orderForm" class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg">Save</button>
+      </div>
+    </div>
+  </div>
 
-{% if not order_entries %}
-<div class="flex flex-col items-center justify-center min-h-[24rem] p-6 ">
-    <img src="{% static 'image/sedih-banget.png' %}" alt="Sad face" class="w-32 h-32 mb-4"/>
-    <p class="text-center text-white mt-4">Belum ada Order-an :(</p>
-</div>
-{% else %}
-<div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 w-11/12 mt-28 mx-10">
-    {% for order in order_entries %}
-        {% include 'card_order.html' with order=order %}
-    {% endfor %}
-</div>
-{% endif %}
-</div>
-<div class="flex items-center justify-center mt-12 mb-8">
-    <a href="{% url 'main:create_order' %}" class="bg-sky-500 hover:bg-lime-500 text-white font-serif font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-        Add New Order
+  <div class="flex justify-center mt-6">
+    <a href="{% url 'main:create_order' %}" class="bg-sky-500 hover:bg-lime-500 text-white font-serif font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mx-4">
+      Add New Order
     </a>
-</div>
+    <button data-modal-target="crudModal" data-modal-toggle="crudModal" class="bg-sky-500 hover:bg-lime-500 text-white font-serif font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mx-4" onclick="showModal();">
+      Add New Order by AJAX
+    </button>
+  </div>
+
+
+
+<script>
+  async function getOrderEntries() {
+    return fetch("{% url 'main:show_json' %}").then((res) => res.json());
+  }
+
+  async function refreshOrderEntries() {
+    document.getElementById("order_cards").innerHTML = "";
+    document.getElementById("order_cards").className = "";
+    const orderEntries = await getOrderEntries();
+    let htmlString = "";
+    let classNameString = "";
+
+    if (orderEntries.length === 0) {
+      classNameString =
+        "flex flex-col items-center justify-center min-h-[24rem] p-6";
+      htmlString = `
+            <div class="flex flex-col items-center justify-center min-h-[24rem] p-6 ">
+                <img src="{% static 'image/sedih-banget.png' %}" alt="Sad face" class="w-32 h-32 mb-4"/>
+                <p class="text-center text-white mt-4">Belum ada Order-an :(</p>
+            </div>
+        `;
+    } else {
+      classNameString =
+        "columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 w-11/12 mt-24 mx-10";
+      orderEntries.forEach((item) => {
+        const name = DOMPurify.sanitize(item.fields.name);
+        const season = item.fields.season;
+        const type = item.fields.type;
+        const description = DOMPurify.sanitize(item.fields.description);
+        const quantity = item.fields.quantity;
+        const size = item.fields.size;
+        const totalPrice = quantity * item.fields.price;
+        htmlString += `
+            <div class="relative bg-red-400 text-white rounded-lg shadow-lg mb-6 break-inside-avoid w-80 mx-auto transform hover:scale-105 transition-transform duration-300 red-card">
+              <div class="bg-red-300 p-4 rounded-t-lg border-b-2 border-red-500">
+                  <h3 class="font-serif font-bold text-xl text-center">${name}</h3>
+              </div>
+              <div class="bg-red-500 p-4 mt-2 mx-4 rounded-lg">
+                  <p class="font-serif font-semibold text-lg text-center mb-4">Order Details</p>
+                  <p class="text-sm mb-2">
+                      <span class="font-serif">Jersey Type:</span> ${season} ${type}
+                  </p>
+                  <p class="text-sm mb-2">
+                      <span class="font-serif">Price:</span> Rp ${totalPrice}
+                  </p>
+                  <p class="text-sm mb-2">
+                      <span class="font-serif">Description:</span> ${description}
+                  </p>
+                  <p class="text-sm mb-2">
+                      <span class="font-serif">Quantity:</span> ${quantity}
+                  </p>
+                  <p class="text-sm">
+                      <span class="font-serif">Size:</span> ${size}
+                  </p>
+              </div>
+              <div class="absolute top-1/3 left-0 flex -translate-x-1/2 -translate-y-1/2">
+                  <a href="/edit-order/${
+                      item.pk
+                    }" class="bg-purple-600 hover:bg-lime-500 text-white rounded-full p-3 transition duration-300 shadow-md">
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                        <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                        <path d="M16 5l3 3" />
+                    </svg>
+                  </a>
+              </div>
+              <div class="absolute top-1/3 right-0 flex translate-x-1/2 -translate-y-1/2">
+                  <a href="/delete/${
+                      item.pk
+                    }" class="bg-sky-500 hover:bg-red-900 text-white rounded-full p-3 transition duration-300 shadow-md">
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-cancel">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                        <path d="M18.364 5.636l-12.728 12.728" />
+                    </svg>
+                  </a>
+              </div>
+            </div>
+            <style>
+              .red-card {
+                  width: 20rem;
+                  height: auto;
+                  background-color: #fa3232;
+                  border-radius: 0.5rem;
+                  position: relative;
+                  padding: 0; 
+                  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+              }
+              .red-card .bg-red-300 {
+                  background-color: #fa3232;
+              }
+              .red-card .bg-red-500 {
+                  background-color: #B91C1C;
+              }
+              .red-card .bg-red-500 p {
+                  margin-bottom: 0.5rem;
+              }
+              .red-card .absolute a {
+                  opacity: 0;
+                  transform: scale(0.8);
+                  transition: transform 0.2s, opacity 0.2s;
+              }
+              .red-card:hover .absolute a {
+                  opacity: 1;
+                  transform: scale(1);
+              }
+            </style>
+            `;
+      });
+    }
+    document.getElementById("order_cards").className = classNameString;
+    document.getElementById("order_cards").innerHTML = htmlString;
+  }
+  refreshOrderEntries();
+
+  const modal = document.getElementById("crudModal");
+  const modalContent = document.getElementById("crudModalContent");
+
+  function showModal() {
+    const modal = document.getElementById("crudModal");
+    const modalContent = document.getElementById("crudModalContent");
+
+    modal.classList.remove("hidden");
+    setTimeout(() => {
+      modalContent.classList.remove("opacity-0", "scale-95");
+      modalContent.classList.add("opacity-100", "scale-100");
+    }, 50);
+
+    loadFormFields();
+  }
+
+  function hideModal() {
+    const modal = document.getElementById("crudModal");
+    const modalContent = document.getElementById("crudModalContent");
+
+    modalContent.classList.remove("opacity-100", "scale-100");
+    modalContent.classList.add("opacity-0", "scale-95");
+
+    setTimeout(() => {
+      modal.classList.add("hidden");
+    }, 150);
+  }
+
+  document.getElementById("cancelButton").addEventListener("click", hideModal);
+  document.getElementById("closeModalBtn").addEventListener("click", hideModal);
+
+  function addOrderEntry() {
+    fetch("{% url 'main:add_order_ajax' %}", {
+      method: "POST",
+      body: new FormData(document.querySelector("#orderForm")),
+    }).then((response) => refreshOrderEntries());
+
+    document.getElementById("orderForm").reset();
+    document.querySelector("[data-modal-toggle='crudModal']").click();
+    hideModal()
+    return false;
+  }
+  function loadFormFields() {
+      fetch("{% url 'main:get_form_fields' %}")
+            .then(response => response.text())
+            .then(html => {
+                // Parse the HTML response and insert it into the modal
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Insert the fields into the placeholders
+                document.querySelector('#season-container div').innerHTML = doc.querySelector('#season').innerHTML;
+                document.querySelector('#type-container div').innerHTML = doc.querySelector('#type').innerHTML;
+                document.querySelector('#size-container div').innerHTML = doc.querySelector('#size').innerHTML;
+
+                // Handle errors if any
+                document.getElementById('season-error').innerText = doc.querySelector('#season-error').innerText;
+                document.getElementById('type-error').innerText = doc.querySelector('#type-error').innerText;
+                document.getElementById('size-error').innerText = doc.querySelector('#size-error').innerText;
+            })
+            .catch(error => console.error('Error loading form fields:', error));
+    }
+
+  document.getElementById("submitOrder").onclick = addOrderEntry;
+  document.getElementById('crudModal').addEventListener('show.bs.modal', loadFormFields);
+</script>
 {% endblock content %}

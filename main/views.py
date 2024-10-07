@@ -11,6 +11,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.utils.html import strip_tags
 
 # Create your views here.
 @login_required(login_url='/login')
@@ -97,11 +100,11 @@ def delete_order(request, id):
     return HttpResponseRedirect(reverse('main:your_order'))
 
 def show_xml(request):
-    data = ECommerce.objects.all()
+    data = ECommerce.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
 def show_json(request):
-    data = ECommerce.objects.all()
+    data = ECommerce.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def show_xml_by_id(request, id):
@@ -135,6 +138,8 @@ def login_user(request):
             response = HttpResponseRedirect(reverse("main:show_main"))
             response.set_cookie('last_login', str(datetime.datetime.now()))
             return response
+        else:
+            messages.error(request, "Invalid username or password. Please try again.")
 
     else:
         form = AuthenticationForm(request)
@@ -146,3 +151,28 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+@csrf_exempt
+@require_POST
+def add_order_ajax(request):
+    name = strip_tags(request.POST.get("name"))
+    season = request.POST.get("season")
+    type = request.POST.get("type")
+    description = strip_tags(request.POST.get("description"))
+    quantity = request.POST.get("quantity")
+    size = request.POST.get("size")
+    user = request.user
+
+    new_order = ECommerce(
+        name=name, season=season,
+        type=type, description=description,
+        quantity=quantity, size=size,
+        user=user
+    )
+    new_order.save()
+
+    return HttpResponse(b"CREATED", status=201)
+
+def get_form_fields(request):
+    form = ECommerceForm()  
+    return render(request, 'form_fields_template.html', {'form': form})

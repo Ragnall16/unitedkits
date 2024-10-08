@@ -31,11 +31,7 @@ def show_main(request):
 
 @login_required(login_url='/login')
 def your_order(request):
-    order_entries = ECommerce.objects.filter(user=request.user)
-    context = {
-        'order_entries': order_entries,
-    }
-    return render(request, 'your_order.html', context)
+    return render(request, 'your_order.html')
 
 def products(request):
     form = JerseyForm()

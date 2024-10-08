@@ -1,8 +1,14 @@
 # Table of Contents
+
+## Link 
+[UnitedKits](http://ragnall-muhammad-unitedkits.pbp.cs.ui.ac.id/)
+
+## Tugas: 
 [Tugas 2](#Tugas-2) <br>
 [Tugas 3](#Tugas-3) <br>
 [Tugas 4](#Tugas-4) <br>
 [Tugas 5](#Tugas-5) <br>
+[Tugas 6](#Tugas-6) <br>
 
 ---
 
@@ -234,3 +240,98 @@ e. Untuk setiap card product, buatlah dua buah button untuk mengedit dan menghap
 
 f. Buatlah navigation bar (navbar) untuk fitur-fitur pada aplikasi yang responsive terhadap perbedaan ukuran device, khususnya mobile dan desktop.
 - Membuat navbar.html, dan juga menambahkan `<div class="mobile-menu hidden...` untuk tampilan navbar pada mobile
+
+---
+
+## Tugas 6
+
+### 1. Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!
+Dengan menggunakan JavaScript pada pengembangan aplikasi web, terdapat beberapa manfaat, di antara lain,
+Interaktif, Responsif, Manipulasi DOM, Asynchronous Requests, serta dapat digunakan secara Cross-Platform
+
+### 2. Jelaskan fungsi dari penggunaan await ketika kita menggunakan fetch()! Apa yang akan terjadi jika kita tidak menggunakan await?
+Await digunakan untuk menunggu hasil dari promise yang di-return oleh fetch() karena fetch() bersifat asinkron.
+
+Jika tidak menggunakan await maupun .then(), program akan melanjutkan eksekusi sebelum fetch() selesai, sehingga hasil data dari fetch belum ada.
+
+### 3. Mengapa kita perlu menggunakan decorator csrf_exempt pada view yang akan digunakan untuk AJAX POST?
+Dekorator csrf_exempt digunakan untuk menghindari pengecekan token CSRF pada request POST yang dikirim melalui AJAX
+
+### 4. Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?
+Melakukan pembersihan data hanya di frontend berpotensi membuat aplikasi vulnerable terhadap serangan. Penyerang dapat melewati validasi di frontend dengan memodifikasi request sebelum dikirim ke server.
+
+### 5.Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+
+
+a. Ubahlah kode cards data mood agar dapat mendukung AJAX GET. <br>
+
+* Mengubah pengambilan order_entries dari menggunakan for loop Django menjadi menggunakan javascript yang memasukkan data order_entries pada id yang sesuai
+
+```JS
+<div id="order_cards"></div>
+...
+document.getElementById("order_cards").className = classNameString;
+document.getElementById("order_cards").innerHTML = htmlString;
+```
+
+b. Lakukan pengambilan data mood menggunakan AJAX GET. Pastikan bahwa data yang diambil hanyalah data milik pengguna yang logged-in. <br>
+
+* Menambahkan fungsi ini pada script html terkait,
+
+```JS
+ async function getOrderEntries() {
+    return fetch("{% url 'main:show_json' %}").then((res) => res.json());
+  }
+```
+
+* Dengan show_json yang mengambil data berdasarkan User
+```
+data = ECommerce.objects.filter(user=request.user)
+```
+<br>
+
+c. Buatlah sebuah tombol yang membuka sebuah modal dengan form untuk menambahkan mood. <br>
+
+* Menambahkan button pada html terkait
+```JS
+<button data-modal-target="..." data-modal-toggle="..." class="..." onclick="showModal();">
+      Add New Order by AJAX
+    </button>
+```
+ * Dengan showModal() berupa function yang menunjukan form yang dibuat pada modal
+
+d. Buatlah fungsi view baru untuk menambahkan mood baru ke dalam basis data. <br>
+
+* Membuat fungsi dengan dekorator @csrf_exempt dan @require_POST
+* Membuat variabel sesuai form dan mengambilnya menggunakan request.POST.get
+* Membuat form menggunakan data yang sudah didapat, lalu form di save
+
+
+e. Buatlah path /create-ajax/ yang mengarah ke fungsi view yang baru kamu buat. <br>
+
+* Menambahkan path pada urls.py yang sesuai
+
+
+f. Hubungkan form yang telah kamu buat di dalam modal kamu ke path /create-ajax/. <br>
+* Membuat function addOrderEntry dengan fetch yang sesuai
+```JS
+fetch("{% url 'main:add_order_ajax' %}", {
+      method: "POST",
+      body: new FormData(document.querySelector("#orderForm")),
+    }).then((response) => refreshOrderEntries());
+...
+```
+
+
+g. Lakukan refresh pada halaman utama secara asinkronus untuk menampilkan daftar mood terbaru tanpa reload halaman utama secara keseluruhan. <br>
+* Membuat asynchronous function refreshOrderEntries() yang melakukan refresh data, lalu tambahkan pada fungsi addOrderEntries serta secara terpisah pada script, yang terpisah digunakan untuk menampilkan daftar order ketika pengguna pertama masuk page your_order
+
+```JS
+<script>
+function addOrderEntry() {
+    fetch(...
+    ).then((response) => refreshOrderEntries());
+}
+refreshOrderEntries();
+</script>
+```

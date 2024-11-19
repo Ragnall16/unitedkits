@@ -4,6 +4,7 @@ from main.views import register, login_user, logout_user
 from main.views import edit_order, delete_order
 from main.views import your_order, products, images
 from main.views import add_order_ajax, get_form_fields
+from main.views import create_order_flutter
 
 app_name = 'main'
 
@@ -24,4 +25,5 @@ urlpatterns = [
     path('images/', images, name='images'),
     path('create-order-ajax', add_order_ajax, name='add_order_ajax'),
     path('get-form-fields/', get_form_fields, name='get_form_fields'),
+    path('create-flutter/', create_order_flutter, name='create_order_flutter'),
 ]
